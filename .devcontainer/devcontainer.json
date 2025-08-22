@@ -20,6 +20,10 @@
 
 	// Use 'postCreateCommand' to run commands after the container is created.
 	"postCreateCommand": "uv sync",
+//
+//    "templateOption": {
+//        "imageVariant": "3.11-bullseye",
+//    }
 
 	// Configure tool-specific properties.
 	// "customizations": {},
