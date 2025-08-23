@@ -27,6 +27,7 @@
 				"hverlin.mise-vscode",
 				"charliermarsh.ruff",
 				"ms-azuretools.vscode-containers",
+				"ms-vscode-remote.remote-containers",
 				"batisteo.vscode-django"
 			]
 		}
