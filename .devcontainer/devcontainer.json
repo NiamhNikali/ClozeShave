@@ -24,7 +24,10 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"hverlin.mise-vscode"
+				"hverlin.mise-vscode",
+				"charliermarsh.ruff",
+				"ms-azuretools.vscode-containers",
+				"batisteo.vscode-django"
 			]
 		}
 	}

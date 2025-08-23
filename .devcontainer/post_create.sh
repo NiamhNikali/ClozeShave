@@ -5,3 +5,4 @@ echo 'eval "$(~/.local/bin/mise activate zsh)"' >> ~/.zshrc
 echo 'eval "$(~/.local/bin/mise activate bash)"' >> ~/.bashrc
 eval "$(~/.local/bin/mise activate bash)"
 mise install
+uv sync
