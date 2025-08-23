@@ -7,7 +7,7 @@ services:
       dockerfile: .devcontainer/Dockerfile
 
     volumes:
-      - clozeshaveSource:/workspaces
+      - clozeshave-source:/workspaces
 
     # Overrides default command so things don't shut down after the process ends.
     command: sleep infinity
@@ -33,3 +33,5 @@ services:
 
 volumes:
   postgres-data:
+  clozeshave-source:
+    external: false
