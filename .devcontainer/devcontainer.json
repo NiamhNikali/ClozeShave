@@ -28,8 +28,14 @@
 				"charliermarsh.ruff",
 				"ms-azuretools.vscode-containers",
 				"ms-vscode-remote.remote-containers",
-				"batisteo.vscode-django"
-			]
+				"batisteo.vscode-django",
+				"cweijan.vscode-postgresql-client2"
+			],
+			"settings": {
+				"[python]": {
+					"editor.defaultFormatter": "charliermarsh.ruff"
+				}
+			}
 		}
 	}
 }

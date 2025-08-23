@@ -33,5 +33,7 @@ services:
 
 volumes:
   postgres-data:
+    # Create if not exists
+    external: false
   clozeshave-source:
     external: false

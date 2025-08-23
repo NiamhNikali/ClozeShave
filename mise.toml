@@ -1,4 +1,5 @@
 [tools]
+rg = "latest"
 ruff = "latest"
 uv = "latest"
 
