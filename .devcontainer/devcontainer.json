@@ -9,7 +9,8 @@
 	"features": {
 		"ghcr.io/devcontainers/features/common-utils:2": {
 			"configureZshAsDefaultShell": true
-		}
+		},
+		"ghcr.io/devcontainers/features/git-lfs:1": {}
 	},
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// This can be used to network with other containers or the host.
