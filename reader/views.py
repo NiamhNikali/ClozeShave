@@ -5,3 +5,8 @@ from django.shortcuts import render
 def index_get(request):
     context = {}
     return render(request, "reader/index.html", context)
+
+def reading_create(request):
+    # Add the reading to the database
+    # Redirect to the new reading
+    return None

@@ -1,6 +1,7 @@
 from django.urls import include, path
-from .views import index_get
+from .views import index_get, reading_create
 
 urlpatterns = [
-    path("index.html", index_get),
+    path("", index_get),
+    path("create", reading_create),
 ]

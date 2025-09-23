@@ -2,6 +2,12 @@
 {% extends "reader/base.html" %}
 
 {% block content %}
-    <h2>Content for My App</h2>
-    <p>Stuff etc etc.</p>
+    <h2>Upload a new text to learn to read it</h2>
+	<form action="/reader/create" method="post">
+        <div>
+            <label for="text_to_learn">The text that will be broken into flashcards</label>
+            <textarea name="text_to_learn" id="text_to_learn"></textarea>
+        </div>
+        <button type="submit">Upload the text</button>
+    </form>
 {% endblock content %}
