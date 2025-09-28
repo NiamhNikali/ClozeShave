@@ -2,6 +2,9 @@
 // README at: https://github.com/devcontainers/templates/tree/main/src/postgres
 {
 	"name": "Python 3 & PostgreSQL",
+	"containerEnv": {
+		"MISE_GITHUB_TOKEN": "${localEnv:MISE_GITHUB_TOKEN}"
+	},
 	"dockerComposeFile": "docker-compose.yml",
 	"service": "app",
 	"workspaceFolder": "/workspaces",

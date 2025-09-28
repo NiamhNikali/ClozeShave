@@ -1,3 +1,4 @@
+from django.http import HttpRequest, HttpResponse, HttpResponseNotFound, request
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_protect
 
@@ -8,7 +9,7 @@ def index_get(request):
     return render(request, "reader/index.html", context)
 
 @csrf_protect
-def reading_create(request):
-    # Add the reading to the database
-    # Redirect to the new reading
-    return None
+def reading_create(request: HttpRequest) -> HttpResponse:
+    request
+    
+    return HttpResponseNotFound()
