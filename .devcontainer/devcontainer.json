@@ -3,7 +3,8 @@
 {
 	"name": "Python 3 & PostgreSQL",
 	"containerEnv": {
-		"MISE_GITHUB_TOKEN": "${localEnv:MISE_GITHUB_TOKEN}"
+		"MISE_GITHUB_TOKEN": "${localEnv:MISE_GITHUB_TOKEN}",
+		"HOMEBREW_GITHUB_API_TOKEN": "${localEnv:HOMEBREW_GITHUB_API_TOKEN}"
 	},
 	"dockerComposeFile": "docker-compose.yml",
 	"service": "app",
