@@ -12,3 +12,6 @@ experimental = false
 run = "python manage.py test"
 [tasks.serve]
 run = "python manage.py runserver"
+
+[env]
+_.file='.env'
