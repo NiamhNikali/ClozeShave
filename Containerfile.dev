@@ -1,18 +1,21 @@
-FROM ghcr.io/astral-sh/uv:0.1.37 AS uv
-ENV UV_COMPILE_BYTECODE=1 UV_LINK_MODE=copy
+FROM ghcr.io/astral-sh/uv:python3.13-trixie-slim
 
-ENV UV_PYTHON_DOWNLOADS=0
+ENV UV_COMPILE_BYTECODE=1 UV_LINK_MODE=copy UV_SYSTEM_PYTHON=1
 
-FROM python:3.12-slim AS python
-
+ADD . /app
 WORKDIR /app
+RUN uv sync --locked
+RUN find /app
+# Install dependencies
+#RUN  \
+#    --mount=type=cache,target=/root/.cache/uv \
+#    --mount=type=bind,source=uv.lock,target=uv.lock \
+#    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
+#    uv sync --locked --no-install-project --no-dev
 
-RUN  \
-    # we use a cache --mount to reuse the uv cache across builds
-    --mount=type=cache,target=/root/.cache/uv \
-    # we use a bind --mount to use the uv binary from the uv stage
-    --mount=type=bind,from=uv,source=/uv,target=/uv \
-    # we use a bind --mount to use the requirements.txt from the host instead of adding a COPY layer
-    --mount=type=bind,source=.,target=. \
-    /uv sync --locked --no-install-project --no-dev
-CMD ["python manage.py runserver 0.0.0.0:8000"]
+# Source code directory needs to be bind mounted in /app during run
+# Just run the Podman development kubernetes description
+# This should also give an interactive terminal for running other server manage commands
+ENTRYPOINT ["uv", "run", "manage.py"]
+# Run dev server by default
+CMD ["runserver", "0.0.0.0:8000"] 
