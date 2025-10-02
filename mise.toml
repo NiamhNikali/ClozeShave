@@ -8,16 +8,15 @@ uv = "latest"
 python.uv_venv_auto = false
 experimental = false
 
-[tasks.test]
-run = "python manage.py test"
-[tasks.serve]
-run = "python manage.py runserver"
 [tasks.build-dev]
-run = "podman build -t clozeshave-dev-server -f Containerfile.dev"
+run = "podman build --build-arg USERNAME=$(whoami) --build-arg UID=$(id -u) --build-arg GID=$(id -g) -t clozeshave-dev-server -f Containerfile.dev"
 [tasks.run-dev]
 run = "podman run --replace --name clozeshave-dev-server --pod clozeshave-dev-pod -dt clozeshave-dev-server:latest"
+[tasks.run-dev-bind]
+description = "Run dev server with bind mount for source code"
+run = "podman run --replace --volume .:/app:z --volume /app/.venv --name clozeshave-dev-server --pod clozeshave-dev-pod -dt clozeshave-dev-server:latest"
 [tasks.run-dev-db]
 env = { "POSTGRES_PASSWORD"="devtest" }
-run = "podman run --name clozeshave-db --pod clozeshave-dev-pod -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD -d postgres"
+run = "podman run --replace --name clozeshave-db --pod clozeshave-dev-pod -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD -d postgres"
 [env]
 _.file='.env'

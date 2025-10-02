@@ -5,24 +5,30 @@ FROM ghcr.io/astral-sh/uv:python3.13-trixie-slim
 ENV UV_LINK_MODE=copy UV_SYSTEM_PYTHON=1
 
 # Run as an unprivileged user
-RUN useradd -ms /bin/sh -u 1001 app
-USER app
+ARG UID=1000
+ARG GID=1000
+ARG USERNAME=developer
+RUN groupadd -g $GID -o $USERNAME
+RUN useradd -m -u $UID -g $GID -o -s /bin/sh $USERNAME
 
 WORKDIR /app
 
 # Install dependencies first
-COPY --chown=app:app pyproject.toml uv.lock ./
-RUN  \
-   --mount=type=cache,target=/root/.cache/uv \
-   uv sync --locked --no-install-project
+RUN --mount=type=cache,target=/root/.cache/uv \
+    --mount=type=bind,source=uv.lock,target=uv.lock,relabel=shared \
+    --mount=type=bind,source=pyproject.toml,target=pyproject.toml,relabel=shared \
+    uv sync --locked --no-install-project
 
 # Add rest of app
-ADD --chown=app:app . ./
+COPY . /app/
 
-RUN uv sync --locked
+RUN --mount=type=cache,target=/root/.cache/uv \
+    uv sync --locked
+
+USER $USERNAME
 
 # FUTURE: Source code directory needs to be bind mounted in /app during run
 # Just run the Podman development kubernetes description
-ENTRYPOINT ["uv", "run", "manage.py"]
+ENTRYPOINT ["uv", "run", "/app/manage.py"]
 # Run dev server by default
 CMD ["runserver", "0.0.0.0:8000"] 
