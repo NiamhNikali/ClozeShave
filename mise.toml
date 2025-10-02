@@ -11,11 +11,13 @@ experimental = false
 [tasks.build-dev]
 run = "podman build --build-arg USERNAME=$(whoami) --build-arg UID=$(id -u) --build-arg GID=$(id -g) -t clozeshave-dev-server -f Containerfile.dev"
 [tasks.run-dev]
-run = "podman run --replace --name clozeshave-dev-server --pod clozeshave-dev-pod -dt clozeshave-dev-server:latest"
+# Use podman stop/rm to ensure anonymous volumes are deleted (i.e. /app/.venv which we don't want to include in the bind mount)
+run = "podman stop clozeshave-dev-server || : && podman rm clozeshave-dev-server || : && podman run --replace --name clozeshave-dev-server --pod clozeshave-dev-pod -dt clozeshave-dev-server:latest"
 [tasks.run-dev-bind]
 description = "Run dev server with bind mount for source code"
-run = "podman run --replace --volume .:/app:z --volume /app/.venv --name clozeshave-dev-server --pod clozeshave-dev-pod -dt clozeshave-dev-server:latest"
+run = "podman stop clozeshave-dev-server || : && podman rm clozeshave-dev-server || : && podman run --rm --replace --volume .:/app:z --volume /app/.venv --name clozeshave-dev-server --pod clozeshave-dev-pod -dt clozeshave-dev-server:latest"
 [tasks.run-dev-db]
+# Currently, the db volume is persisted between runs
 env = { "POSTGRES_PASSWORD"="devtest" }
 run = "podman run --replace --name clozeshave-db --pod clozeshave-dev-pod -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD -d postgres"
 [env]
