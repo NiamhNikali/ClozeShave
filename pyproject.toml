@@ -8,3 +8,8 @@ dependencies = [
     "django>=5.2.5",
     "psycopg[binary,pool]>=3.2.10",
 ]
+
+[dependency-groups]
+dev = [
+    "pdbpp>=0.11.7",
+]

@@ -8,7 +8,7 @@ metadata:
   annotations:
     io.kubernetes.cri-o.SandboxID/clozeshave-db: 6a566c250e4d94a0a81d19ce117957f22d9515cf23b68496bcffc568de1d8025
     io.kubernetes.cri-o.SandboxID/clozeshave-dev-server: 6a566c250e4d94a0a81d19ce117957f22d9515cf23b68496bcffc568de1d8025
-  creationTimestamp: "2025-10-01T22:53:05Z"
+  creationTimestamp: "2025-10-02T02:55:57Z"
   labels:
     app: clozeshave-dev-pod
   name: clozeshave-dev-pod
@@ -37,7 +37,7 @@ spec:
       value: xterm
     image: localhost/clozeshave-dev-server:latest
     name: clozeshave-dev-server
-    stdin: true
+    securityContext: {}
     tty: true
   volumes:
   - name: 8378ddc73905047a2d15b7c3175828077fb5f2b04ce94d103aaded4baabe1aef-pvc

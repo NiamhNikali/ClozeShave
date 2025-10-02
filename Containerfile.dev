@@ -1,21 +1,28 @@
+# Keeping uv around allows me to not use pip or venvs,
+# so let's do that for the dev containerfile
 FROM ghcr.io/astral-sh/uv:python3.13-trixie-slim
 
-ENV UV_COMPILE_BYTECODE=1 UV_LINK_MODE=copy UV_SYSTEM_PYTHON=1
+ENV UV_LINK_MODE=copy UV_SYSTEM_PYTHON=1
 
-ADD . /app
+# Run as an unprivileged user
+RUN useradd -ms /bin/sh -u 1001 app
+USER app
+
 WORKDIR /app
-RUN uv sync --locked
-RUN find /app
-# Install dependencies
-#RUN  \
-#    --mount=type=cache,target=/root/.cache/uv \
-#    --mount=type=bind,source=uv.lock,target=uv.lock \
-#    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
-#    uv sync --locked --no-install-project --no-dev
 
-# Source code directory needs to be bind mounted in /app during run
+# Install dependencies first
+COPY --chown=app:app pyproject.toml uv.lock ./
+RUN  \
+   --mount=type=cache,target=/root/.cache/uv \
+   uv sync --locked --no-install-project
+
+# Add rest of app
+ADD --chown=app:app . ./
+
+RUN uv sync --locked
+
+# FUTURE: Source code directory needs to be bind mounted in /app during run
 # Just run the Podman development kubernetes description
-# This should also give an interactive terminal for running other server manage commands
 ENTRYPOINT ["uv", "run", "manage.py"]
 # Run dev server by default
 CMD ["runserver", "0.0.0.0:8000"] 
