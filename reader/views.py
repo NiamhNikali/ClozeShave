@@ -1,22 +1,23 @@
+from typing import Any
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect, HttpResponseNotFound
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
 from django.views.decorators.csrf import csrf_protect
+from django.views.generic import CreateView, DetailView
 
-from reader.models import Reading
+from .models import Reading
 
 # Create your views here.
 # Let's start with a function-based view cuz it's simpler.
 def index_get(request):
     return render(request, "reader/index.html", {})
 
-@csrf_protect
-def reading_create(request: HttpRequest) -> HttpResponse:
-    # semi-stub
-    new_reading = Reading()
-    new_reading.original_text = request.POST['text_to_learn']
-    new_reading.save()
-    return render(request, "reader/reading.html", request.POST)
+class ReadingDetailView(DetailView):
+    model = Reading
 
-def reading_get(request: HttpRequest) -> HttpResponse:
-    # stub
-    return HttpResponseNotFound()
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        return super().get_context_data(**kwargs)
+
+class ReadingCreateView(CreateView):
+    model = Reading
+    fields = '__all__'

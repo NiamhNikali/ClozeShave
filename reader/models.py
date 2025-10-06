@@ -15,4 +15,4 @@ class Reading(models.Model):
         return self.original_text[:20]
 
     def get_absolute_url(self):
-        return reverse("_detail", kwargs={"pk": self.pk})
+        return reverse("reading_detail", kwargs={"pk": self.pk})

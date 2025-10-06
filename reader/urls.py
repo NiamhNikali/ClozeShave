@@ -1,8 +1,7 @@
 from django.urls import path
-from .views import index_get, reading_create, reading_get
+from .views import index_get, ReadingDetailView, ReadingCreateView
 
 urlpatterns = [
-    path("", index_get),
-    path("create", reading_create),
-    path("r/<int:pk>", reading_get),
+    path("create", ReadingCreateView.as_view(), name="reading_create"),
+    path("detail/<int:pk>/", ReadingDetailView.as_view(), name="reading_detail"),
 ]
